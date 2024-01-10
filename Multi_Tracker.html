@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multi Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+    header {
+      background-color: #2c3e50;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #previousData {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ecf0f1;
+      border-radius: 5px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Multi Tracker</h1>
+  </header>
+  <main>
+    <button onclick="medicineTracking()">Medicine Tracker</button>
+    <button onclick="waterTracking()">Water Consumption Tracker</button>
+    <button onclick="sleepTracking()">Sleep Tracker</button>
+    <button onclick="viewPreviousData()">View Previous Data</button>
+    <button onclick="exitSite()">Exit</button>
+
+    <div id="output"></div>
+    <div id="previousData">
+      <h2>Previous Data</h2>
+      <div id="medicineData"></div>
+      <div id="waterData"></div>
+      <div id="sleepData"></div>
+    </div>
+  </main>
+
+  <script>
+        let medicine_inputs = [];
+    let water_inputs = [];
+    let sleep_inputs = [];
+
+    function medicineTracking() {
+      const medicineName = prompt("Enter the name of the medicine:");
+      const medicineDosage = prompt("Enter the dosage (in mg):");
+
+      medicine_inputs.push({ name: medicineName, dosage: medicineDosage });
+      document.getElementById("output").innerText = `Medicine tracked successfully!\nName: ${medicineName}, Dosage: ${medicineDosage} mg`;
+    }
+
+    function waterTracking() {
+      const waterAmount = prompt("Enter the amount of water consumed (in ltr):");
+
+      water_inputs.push({ amount: waterAmount });
+      document.getElementById("output").innerText = `Water intake tracked successfully!\nAmount: ${waterAmount} litre`;
+    }
+
+    function sleepTracking() {
+      const sleepDuration = prompt("Enter the duration of sleep (in hrs):");
+
+      sleep_inputs.push({ duration: sleepDuration });
+      document.getElementById("output").innerText = `Sleep tracked successfully!\nDuration: ${sleepDuration} hours`;
+    }
+
+    function viewPreviousData() {
+      const previousData = document.getElementById("previousData");
+      previousData.style.display = "block";
+
+      document.getElementById("medicineData").innerHTML = `<h3>Medicine Tracker</h3>${formatData(medicine_inputs)}`;
+      document.getElementById("waterData").innerHTML = `<h3>Water Tracker</h3>${formatData(water_inputs)}`;
+      document.getElementById("sleepData").innerHTML = `<h3>Sleep Tracker</h3>${formatData(sleep_inputs)}`;
+
+      document.getElementById("output").innerText = "";
+    }
+
+    function formatData(dataArray) {
+      if (dataArray.length === 0) return "<p>No data available</p>";
+      let formatted = "<ul>";
+      dataArray.forEach(item => {
+        formatted += "<li>";
+        for (const key in item) {
+          formatted += `${key}: ${item[key]}, `;
+        }
+        formatted = formatted.slice(0, -2);
+        formatted += "</li>";
+      });
+      formatted += "</ul>";
+      return formatted;
+    }
+
+    function exitSite() {
+      alert("Exited");
+      window.close();
+    }
+  </script>
+</body>
+</html>
